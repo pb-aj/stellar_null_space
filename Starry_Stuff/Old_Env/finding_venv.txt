@@ -1,0 +1,5 @@
+Use this:
+source .venv/bin/activate
+
+Check with this:
+which python

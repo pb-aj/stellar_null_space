@@ -1,0 +1,14 @@
+The following file details how to create a .venv that runs starry:
+
+1.  Make sure to not use a conda enviorment.  The newest version of starry no longer supports conda install, so you will need to use pip.  Using pip causes issues with other packages (specifically numpy).  If you see an error such as "AttributeError: module 'numpy' has no attribute 'ndarray'" even though your numpy version is correct, then it is because of the conda enviorment. .Venv fixes this issue and keeps everything to pip installs.
+
+2.  To create the needed virtual enviorment, you need to install a version of python 3.9 on your computer (newer versions may work, but I can not guarantee it).  You can do this here: https://www.python.org/downloads/.
+
+3.  You will also want to download the attached requirements.txt file to use for your .venv (need to attach this file!)
+
+4.  Once this is done, you can make a virtual enviorment (.venv) in vs code.  To do this, open the folder you want to make it in/run your code in.  Then you can either search for Python: Create Enviorment or hit command+shift+p to select it (command is likely control on windows).  Once you select this, click a .venv enviorment and select the correct python version (3.9.XX).  The requirements.txt should automatcially come up, so make sure it is selected (this will auto-download any needed packages)
+
+5.  Once the .venv finishes forming, you should be all set!  You may need to restart your terminal or vs code to see the changes, but now everything in this folder should run through that .venv.
+
+6.  A big problem I ran into was new packages would update old packages (such as numpy or pandas), breaking the enviorment.  If this happens, you can simply reset using requirements.txt (I would add each successful new package install to a copy of requirements.txt as well to save progress).  You can also avoid this by using package versions that were released near or before numpy 1.21 (https://pypi.org/project/numpy/1.21.0/).  This is because starry uses theano, which is outdated and does not work with newer versions of numpy.  Multiple places online said numpy 1.20.3 or earlier was needed, but I found that 1.21 works too.  Side note, starry's final version was released in October of 2021 (https://pypi.org/project/starry/#history), so packages around that time should also work.
+
