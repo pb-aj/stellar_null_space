@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./theresa/lib/modules/rate",
+        "./theresa/lib"
+    ]
+}

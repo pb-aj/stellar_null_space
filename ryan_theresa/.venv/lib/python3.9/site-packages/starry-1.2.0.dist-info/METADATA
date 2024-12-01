@@ -1,0 +1,79 @@
+Metadata-Version: 2.1
+Name: starry
+Version: 1.2.0
+Summary: Analytic occultation light curves for astronomy.
+Home-page: https://github.com/rodluger/starry
+Author: Rodrigo Luger
+Author-email: rodluger@gmail.com
+License: MIT
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: setuptools-scm
+Requires-Dist: numpy (>=1.19.2)
+Requires-Dist: scipy (>=1.5.0)
+Requires-Dist: astropy (>=3.1)
+Requires-Dist: pymc3
+Requires-Dist: pymc3-ext
+Requires-Dist: aesara-theano-fallback (>=0.0.4)
+Requires-Dist: matplotlib (>=3.2.2)
+Requires-Dist: ipython
+Requires-Dist: exoplanet (>=0.4.5)
+Requires-Dist: bokeh
+Requires-Dist: packaging
+Provides-Extra: docs
+Requires-Dist: sphinx (>=1.7.5) ; extra == 'docs'
+Requires-Dist: pandoc ; extra == 'docs'
+Requires-Dist: jupyter-client (<7.0) ; extra == 'docs'
+Requires-Dist: jupyter ; extra == 'docs'
+Requires-Dist: jupytext ; extra == 'docs'
+Requires-Dist: ipywidgets ; extra == 'docs'
+Requires-Dist: nbformat ; extra == 'docs'
+Requires-Dist: nbconvert ; extra == 'docs'
+Requires-Dist: rtds-action ; extra == 'docs'
+Requires-Dist: nbsphinx ; extra == 'docs'
+Requires-Dist: tqdm ; extra == 'docs'
+Requires-Dist: jinja2 (<=2.11.3) ; extra == 'docs'
+Provides-Extra: tests
+Requires-Dist: parameterized ; extra == 'tests'
+Requires-Dist: nose ; extra == 'tests'
+Requires-Dist: pytest ; extra == 'tests'
+Requires-Dist: pytest-dependency ; extra == 'tests'
+Requires-Dist: pytest-env ; extra == 'tests'
+Requires-Dist: pytest-cov ; extra == 'tests'
+Requires-Dist: scikit-image ; extra == 'tests'
+Requires-Dist: pillow ; extra == 'tests'
+Requires-Dist: tqdm ; extra == 'tests'
+Requires-Dist: mpmath ; extra == 'tests'
+
+<p align="center">
+  <img width = "450" src="https://github.com/rodluger/starry/blob/master/docs/starry.png?raw=true"/>
+  <br>
+  <br>
+  Tools for mapping stars and exoplanets.
+  <p align="center">
+    <!-- tests -->
+    <a href="https://github.com/rodluger/starry/actions/workflows/tests.yml">
+      <img src="https://github.com/rodluger/starry/actions/workflows/tests.yml/badge.svg" alt="Test status"/>
+    </a>
+    <!-- coverage -->
+    <a href="https://coveralls.io/github/rodluger/starry">
+      <img src="https://coveralls.io/repos/github/rodluger/starry/badge.svg?branch=master" alt="Coverage status"/>
+    </a>
+    <br/>
+    <!-- build docs -->
+    <a href='https://starry.readthedocs.io/en/latest/?badge=latest'>
+    <img src='https://readthedocs.org/projects/starry/badge/?version=latest' alt="Documentation status" />
+  </a>
+    <!-- build notebooks -->
+    <a href="https://starry.readthedocs.io/en/latest/tutorials/">
+      <img src="https://github.com/rodluger/starry/actions/workflows/tutorials.yml/badge.svg" alt="Notebook status"/>
+    </a>
+    <!-- read the paper -->
+    <a href="http://adsabs.harvard.edu/abs/2019AJ....157...64L">
+      <img src="https://img.shields.io/badge/paper-Astronomical%20Journal-blue.svg?style=flat" alt="Read the paper"/>
+    </a>
+  </p>
+</p>
+
+

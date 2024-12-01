@@ -1,0 +1,3 @@
+[console_scripts]
+taurex = taurex.taurex:main
+taurex-plot = taurex.plot.plotter:main [Plot]

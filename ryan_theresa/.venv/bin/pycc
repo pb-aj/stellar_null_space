@@ -1,0 +1,3 @@
+#!/Users/a.j.devaux/Downloads/rychallener-theresa-e3bbc96/.venv/bin/python
+from numba.pycc import main
+main()

@@ -1,0 +1,2 @@
+[console_scripts]
+mc3 = mc3.__main__:main

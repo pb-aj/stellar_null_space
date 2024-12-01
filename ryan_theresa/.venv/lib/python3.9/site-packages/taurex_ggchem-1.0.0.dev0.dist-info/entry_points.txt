@@ -1,0 +1,3 @@
+[taurex.plugins]
+ggchem = taurex_ggchem
+
