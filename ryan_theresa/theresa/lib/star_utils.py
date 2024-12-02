@@ -22,12 +22,12 @@ def initsystem(fit, ydeg):
     
     cfg = fit.cfg
 
-    star = starry.Primary(starry.Map(ydeg=ydeg), #added in lazy=False - removed due to .eval() issues
+    star = starry.Primary(starry.Map(ydeg=ydeg, inc = cfg.star.inc), #added in lazy=False - removed due to .eval() issues
                           m   =cfg.star.m,
                           r   =cfg.star.r,
-                          prot=cfg.star.prot,
-                          inc = cfg.star.inc,
+                          prot= cfg.star.prot,
                           theta0=0)
+
 
     # planet = starry.kepler.Secondary(starry.Map(ydeg=ydeg), #added in lazy=False
     #                                  m    =cfg.planet.m,

@@ -50,7 +50,7 @@ import my_plots as plots
 import mkcfg
 import star_utils as utils
 import constants   as c
-import fitclass    as fc
+import star_fitclass    as fc
 import taurexclass as trc
 
 starry.config.quiet = True
@@ -69,7 +69,7 @@ def finding_A(cfile):
     print("Reading the data.")
     fit.read_data()
 
-    lmax = cfg.twod.lmax[0]
+    lmax = cfg.twod.lmax
 
     print("First star and planet objects.")
     star, system = utils.initsystem(fit, lmax)
@@ -124,8 +124,8 @@ def finding_A(cfile):
 
     fit.maps.append(fc.Map())
     m = fit.maps[0]
-    m.ncurves = cfg.twod.ncurves[0]
-    m.lmax    = cfg.twod.lmax[0]
+    m.ncurves = cfg.twod.ncurves
+    m.lmax    = cfg.twod.lmax
     # m.wlmid = fit.wlmid[i]
 
     if not os.path.isdir(cfg.outdir):
