@@ -3,7 +3,6 @@ import pca
 import utils
 import scipy.constants as sc
 
-#HAVE ONLY EDITED THIS FUNCTION - replaced planet with star
 def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
     """
     Generates light curves from a star+planet system at times t,
@@ -43,27 +42,40 @@ def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
         "eigencurves"). The imaginary part is discarded, if nonzero.
     """    
     star   = system.bodies[0]
-    planet = system.bodies[1]
+    # planet = system.bodies[1]
 
     nt = len(t)
     
     # Create harmonic maps of the planet, excluding Y00
     # (lmax**2 maps, plus a negative version for all but Y00)
-    nharm = 2 * ((lmax + 1)**2 - 1)
+    nharm = ((lmax + 1)**2 - 1) *2
     lcs = np.zeros((nharm, nt))
     ind = 0
     for i, l in enumerate(range(1, lmax + 1)):
-        for j, m in enumerate(range(-l, l + 1)):           
-            star.map[l, m] =  1.0
-            sflux, lcs[ind]   = [a.eval() for a in system.flux(t, total=False)]
-            star.map[l, m] = -1.0
-            sflux, lcs[ind+1] = [a.eval() for a in system.flux(t, total=False)]
-            star.map[l, m] = 0.0
+        for j, m in enumerate(range(-l, l + 1)):  
+            # print(f"The starting map value is {planet.map}")    
+            # print(f"The l value is {l} and the m value is {m}")
+            # print(f"The value a.eval() is {system.flux(t, total=False)[1].eval()}")     
+            star.map[l, m] =  1.0 #update why?
+            lcs[ind] = [a.eval() for a in system.flux(t, total=True)]
+            # print(f"The pmap = 1 lcs row is {[a.eval() for a in system.flux(t, total=False)][1]}")
+            star.map[l, m] = -1.0 #update why? is every second row negative version???
+            lcs[ind+1] = [a.eval() for a in system.flux(t, total=True)]
+            # print(f"The pmap = -1 lcs row is {[a.eval() for a in system.flux(t, total=False)][1]}\n")
+            star.map[l, m] = 0.0 #how the map started
             ind += 2
+            # ind += 1
+
+    print(lcs.shape)
+
+    # np.savetxt("lcs_uniform_test.txt", lcs, delimiter=",")
 
     # Subtact uniform map contribution (starry includes this in all
     # light curves)
-    lcs -= y00
+    # lcs -= y00 # will be zero for a star-only system
+
+    # np.savetxt("lcs_test.txt", lcs, delimiter=",")
+    # return None #need to fix this
             
     # Run PCA to determine orthogonal light curves
     if ncurves is None:

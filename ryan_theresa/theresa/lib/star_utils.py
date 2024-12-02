@@ -13,8 +13,6 @@ import theano.tensor as tt
 import mc3.stats as ms
 from numba import njit
 
-
-#Only changed this function to make ydeg=ydeg for star object too
 def initsystem(fit, ydeg):
     '''
     Uses a fit object to build the respective starry objects. Useful
@@ -24,26 +22,28 @@ def initsystem(fit, ydeg):
     
     cfg = fit.cfg
 
-    star = starry.Primary(starry.Map(ydeg=ydeg, amp=1), #made ydeg=ydeg for star object too
+    star = starry.Primary(starry.Map(ydeg=ydeg), #added in lazy=False - removed due to .eval() issues
                           m   =cfg.star.m,
                           r   =cfg.star.r,
-                          prot=cfg.star.prot)
+                          prot=cfg.star.prot,
+                          inc = cfg.star.inc,
+                          theta0=0)
 
-    planet = starry.kepler.Secondary(starry.Map(ydeg=ydeg),
-                                     m    =cfg.planet.m,
-                                     r    =cfg.planet.r,
-                                     porb =cfg.planet.porb,
-                                     prot =cfg.planet.prot,
-                                     Omega=cfg.planet.Omega,
-                                     ecc  =cfg.planet.ecc,
-                                     w    =cfg.planet.w,
-                                     t0   =cfg.planet.t0,
-                                     inc  =cfg.planet.inc,
-                                     theta0=180)
+    # planet = starry.kepler.Secondary(starry.Map(ydeg=ydeg), #added in lazy=False
+    #                                  m    =cfg.planet.m,
+    #                                  r    =cfg.planet.r,
+    #                                  porb =cfg.planet.porb,
+    #                                  prot =cfg.planet.prot,
+    #                                  Omega=cfg.planet.Omega,
+    #                                  ecc  =cfg.planet.ecc,
+    #                                  w    =cfg.planet.w,
+    #                                  t0   =cfg.planet.t0,
+    #                                  inc  =cfg.planet.inc,
+    #                                  theta0=180)
 
-    system = starry.System(star, planet)
+    system = starry.System(star)
 
-    return star, planet, system
+    return star, system #, planet, system
 
 def specint(wn, spec, filtwn_list, filttrans_list):
     """
