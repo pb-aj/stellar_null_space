@@ -292,7 +292,7 @@ def finding_A(cfile):
 
 
 
-    # plots.emaps(planet, m.eigeny, outdir, proj='rect')
+    plots.emaps(planet, m.eigeny, outdir, proj='rect')
 
 
     
