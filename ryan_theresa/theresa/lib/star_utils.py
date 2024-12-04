@@ -26,7 +26,7 @@ def initsystem(fit, ydeg):
                           m   =cfg.star.m,
                           r   =cfg.star.r,
                           prot= cfg.star.prot,
-                          theta0=0)
+                          theta0=180) #?
 
 
     # planet = starry.kepler.Secondary(starry.Map(ydeg=ydeg), #added in lazy=False
