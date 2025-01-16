@@ -68,6 +68,8 @@ def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
 
     print(lcs.shape)
 
+    #test
+
     # np.savetxt("lcs_uniform_test.txt", lcs, delimiter=",")
 
     # Subtact uniform map contribution (starry includes this in all
