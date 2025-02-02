@@ -67,6 +67,7 @@ def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
             # ind += 1
 
     print(lcs.shape)
+    print(sflux)
 
     # np.savetxt("lcs_uniform_test.txt", lcs, delimiter=",")
 

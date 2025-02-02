@@ -79,6 +79,8 @@ def finding_A(cfile):
     print("First star and planet objects.")
     star, planet, system = utils.initsystem(fit, lmax)
 
+    print(f"The system var looks like {system}")
+
     # print("Computing planet and star positions at observation times.")
     # fit.x, fit.y, fit.z = [a.eval() for a in system.position(fit.t)]
 
@@ -120,6 +122,8 @@ def finding_A(cfile):
                                 system.flux(fit.t, total=False)]
     
     print(f"The pflux_y00 is: {fit.pflux_y00}")
+
+    print(f"The sflux is: {fit.sflux}")
 
   
 

@@ -30,7 +30,7 @@ for k in range(nsamples):
 
 R = np.median(R, axis=0)
 
-# print(R)
+print(R)
 
 # Show that the rank is just...
 Rfunc = lambda l: np.maximum(3, 4 * np.floor(l / 2) + 1)
