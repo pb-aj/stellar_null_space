@@ -11,7 +11,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import atm
 
 
-def emaps(planet, eigeny, outdir, proj='ortho'):
+def emaps(star, eigeny, outdir, proj='ortho'):
     ncurves, ny = eigeny.shape
 
     if proj == 'ortho':
@@ -34,7 +34,7 @@ def emaps(planet, eigeny, outdir, proj='ortho'):
                              sharex=True, sharey=True)
     
     for j in range(ncurves):
-        planet.map[1:,:] = 0
+        star.map[1:,:] = 0
 
         xloc = j %  ncols
         yloc = j // ncols
@@ -43,13 +43,15 @@ def emaps(planet, eigeny, outdir, proj='ortho'):
         yi = 1
         for l in range(1, lmax + 1):
             for m in range(-l, l + 1):
-                planet.map[l, m] = eigeny[j, yi]
+                star.map[l, m] = eigeny[j, yi]
                 yi += 1
         
-        ax.imshow(planet.map.render(theta=0, projection=proj).eval(),
+        ax.imshow(star.map.render(theta=0, projection=proj).eval(),
                   origin="lower",
                   cmap="plasma",
                   extent=extent)
+        
+        # star.map.show(theta=np.linspace(0, 360, 50))
     
 
         # Axes are wrong for non-rectangular projections

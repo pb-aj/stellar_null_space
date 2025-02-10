@@ -12,6 +12,7 @@ import progressbar
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+import pandas as pd
 
 # Taurex imports
 import taurex
@@ -77,7 +78,7 @@ def finding_A(cfile):
     lmax = cfg.twod.lmax[0]
 
     print("First star and planet objects.")
-    star, planet, system = utils.initsystem(fit, lmax)
+    star, planet, system = utils.initsystem(fit, 1)
 
     print(f"The system var looks like {system}")
 
@@ -124,6 +125,20 @@ def finding_A(cfile):
     print(f"The pflux_y00 is: {fit.pflux_y00}")
 
     print(f"The sflux is: {fit.sflux}")
+
+    print(f"The system flux is {system.flux(fit.t, total=False)[0].eval()}")
+
+    # print(f"The sflux shape is: {fit.sflux.shape}") # shape is 2352 too!
+
+    # print(f"The shape of system.flux is {len(system.flux(fit.t, total=False))}") # shape is 2
+
+    # print(f"The shape of fit.t is {fit.t.shape}") # shape is 2352
+
+    # print(pd.Series(fit.sflux == fit.pflux_y00).value_counts()) #The two are not the same!
+
+    # print(pd.Series(fit.sflux).value_counts()) #star only has values of 1
+
+    # print(pd.Series(fit.pflux_y00).value_counts()) #planet has values 0-1 with most being 1 or 0.  Others must be during secondary eclipse
 
   
 
@@ -280,11 +295,9 @@ def finding_A(cfile):
     print(f"The new rank with eigeny.T is {eign_R_T}")
 
 
-    # print(f"The designe matrix of eigeny is {eigeny_A}.\nIt has rank {eigen_R_2}")
-    # plots.lightcurves(fit.t, m.lcs, outdir)
+ 
 
-    # plots.eigencurves(fit.t, m.ecurves, outdir, "ecurves_curves",
-    #                           ncurves=m.ncurves)
+
     
     plots.eigencurves(fit.t, m.ecurves, outdir, "ecurves_curves",
                               ncurves=m.ncurves)

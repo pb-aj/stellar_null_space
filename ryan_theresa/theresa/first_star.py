@@ -12,6 +12,7 @@ import progressbar
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+import pandas as pd
 
 # Taurex imports
 import taurex
@@ -46,7 +47,7 @@ import atm
 import my_pca as pca
 import star_eigen as eigen
 import model
-import my_plots as plots
+import star_plots as plots
 import mkcfg
 import star_utils as utils
 import constants   as c
@@ -72,7 +73,7 @@ def finding_A(cfile):
     lmax = cfg.twod.lmax
 
     print("First star and planet objects.")
-    star, system = utils.initsystem(fit, lmax)
+    star = utils.initsystem(fit, 1)
 
     # print("Computing planet and star positions at observation times.")
     # fit.x, fit.y, fit.z = [a.eval() for a in system.position(fit.t)]
@@ -113,10 +114,20 @@ def finding_A(cfile):
 
     #may not need this a pflux_y00 looks like all 1s (see above)
     # print("Calculating uniform-map planet and star fluxes.")
-    fit.sflux= [a.eval() for a in  \
-                                system.flux(fit.t, total=True)]
+    # fit.sflux= [a.eval() for a in  \
+    #                             system.flux(fit.t, total=True)]
+
+    fit.sflux = np.ones(fit.t.shape)
     
     print(f"The sflux is: {fit.sflux}")
+
+    print(f"The star map has flux {star.map.flux(theta=np.linspace(0,360,len(fit.t))).eval()}")
+
+    print(f"The time shape is {fit.t.shape}")
+
+    print(star.map.inc.eval())
+
+    star.map.show(theta=np.linspace(0, 360, 50))
 
   
 
@@ -138,11 +149,11 @@ def finding_A(cfile):
         os.mkdir(os.path.join(cfg.outdir, m.subdir))
 
     # New planet object with updated lmax
-    star, system = utils.initsystem(fit, m.lmax)
+    star = utils.initsystem(fit, m.lmax)
 
     print("Running PCA to determine eigencurves.")
     m.eigeny, m.evalues, m.evectors, m.ecurves, m.lcs = \
-    eigen.mkcurves(system, fit.t, m.lmax, fit.pflux_y00,
+    eigen.mkcurves(star, fit.t, m.lmax, fit.sflux,
                     ncurves=m.ncurves, method=cfg.twod.pca)
     
     # print("Stopping")
@@ -242,54 +253,55 @@ def finding_A(cfile):
 
     print(f"The new rank with ecurves.T is {evect_R_T}")
 
-    # eigeny_A = m.eigeny #m.eigeny.design_matrix()
+    eigeny_A = m.eigeny #m.eigeny.design_matrix()
 
-    # eign_R_1 = np.empty((nsamples, lmax))
+    eign_R_1 = np.empty((nsamples, lmax))
 
-    # for k in range(nsamples):
+    for k in range(nsamples):
         
-    #     eign_R_1[k] = [
-    #         np.linalg.matrix_rank(eigeny_A[:, : (l + 1) ** 2]) for l in range(1, lmax + 1)
-    #     ]
-    #     # print(R[k])
+        eign_R_1[k] = [
+            np.linalg.matrix_rank(eigeny_A[:, : (l + 1) ** 2]) for l in range(1, lmax + 1)
+        ]
+        # print(R[k])
     
-    # eign_R_1 = np.median(eign_R_1, axis=0)
+    eign_R_1 = np.median(eign_R_1, axis=0)
 
-    # print(f"The new rank with eigeny is {eign_R_1}")
+    print(f"The new rank with eigeny is {eign_R_1}")
 
-    # eigeny_A_T = m.eigeny #m.eigeny.design_matrix()
+    eigeny_A_T = m.eigeny #m.eigeny.design_matrix()
 
-    # eign_R_T = np.empty((nsamples, lmax))
+    eign_R_T = np.empty((nsamples, lmax))
 
-    # for k in range(nsamples):
+    for k in range(nsamples):
         
-    #     eign_R_T[k] = [
-    #         np.linalg.matrix_rank(eigeny_A_T[:, : (l + 1) ** 2]) for l in range(1, lmax + 1)
-    #     ]
-    #     # print(R[k])
+        eign_R_T[k] = [
+            np.linalg.matrix_rank(eigeny_A_T[:, : (l + 1) ** 2]) for l in range(1, lmax + 1)
+        ]
+        # print(R[k])
     
-    # eign_R_T = np.median(eign_R_T, axis=0)
+    eign_R_T = np.median(eign_R_T, axis=0)
 
-    # print(f"The new rank with eigeny.T is {eign_R_T}")
+    print(f"The new rank with eigeny.T is {eign_R_T}")
 
 
     # print(f"The designe matrix of eigeny is {eigeny_A}.\nIt has rank {eigen_R_2}")
     # plots.lightcurves(fit.t, m.lcs, outdir)
 
-    # plots.eigencurves(fit.t, m.ecurves, outdir, "ecurves_curves",
-    #                           ncurves=m.ncurves)
+    plots.eigencurves(fit.t, m.ecurves, outdir, "ecurves_curves",
+                              ncurves=m.ncurves)
     
-    # plots.eigencurves(fit.t, m.ecurves, outdir, "ecurves_curves",
-    #                           ncurves=m.ncurves)
 
-    # plots.eigencurves(fit.t, m.lcs, outdir, "lcs_curves",
-    #                           ncurves=m.ncurves)
+    plots.eigencurves(fit.t, m.lcs, outdir, "lcs_curves",
+                              ncurves=m.ncurves)
 
     
 
 
 
-    # plots.emaps(planet, m.eigeny, outdir, proj='rect')
+    plots.emaps(star, m.eigeny, outdir, proj='rect')
+    #This creates the star maps I was seeing in the line below
+
+    # star.map.show(theta=np.linspace(0, 360, 50))
 
 
     

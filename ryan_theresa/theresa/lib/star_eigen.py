@@ -3,7 +3,7 @@ import pca
 import utils
 import scipy.constants as sc
 
-def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
+def mkcurves(star, t, lmax, y00, ncurves=None, method='pca'):
     """
     Generates light curves from a star+planet system at times t,
     for positive and negative spherical harmonics with l up to lmax.
@@ -41,10 +41,12 @@ def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
         nharm x nt array of the data projected in the new space (the PCA
         "eigencurves"). The imaginary part is discarded, if nonzero.
     """    
-    star   = system.bodies[0]
+    # star   = system.bodies[0]
     # planet = system.bodies[1]
 
     nt = len(t)
+
+    thet = np.linspace(0, 360, nt)
     
     # Create harmonic maps of the planet, excluding Y00
     # (lmax**2 maps, plus a negative version for all but Y00)
@@ -57,10 +59,12 @@ def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
             # print(f"The l value is {l} and the m value is {m}")
             # print(f"The value a.eval() is {system.flux(t, total=False)[1].eval()}")     
             star.map[l, m] =  1.0 #update why?
-            lcs[ind] = [a.eval() for a in system.flux(t, total=True)]
+            lcs[ind] = star.map.flux(theta=thet).eval()
+            print(f"The lcs at index {ind} is {lcs[ind]}")
             # print(f"The pmap = 1 lcs row is {[a.eval() for a in system.flux(t, total=False)][1]}")
             star.map[l, m] = -1.0 #update why? is every second row negative version???
-            lcs[ind+1] = [a.eval() for a in system.flux(t, total=True)]
+            lcs[ind+1] = star.map.flux(theta=thet).eval()
+            print(f"The lcs at index {ind+1} is {lcs[ind+1]}")
             # print(f"The pmap = -1 lcs row is {[a.eval() for a in system.flux(t, total=False)][1]}\n")
             star.map[l, m] = 0.0 #how the map started
             ind += 2

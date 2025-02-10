@@ -22,11 +22,13 @@ def initsystem(fit, ydeg):
     
     cfg = fit.cfg
 
-    star = starry.Primary(starry.Map(ydeg=ydeg, inc = cfg.star.inc), #added in lazy=False - removed due to .eval() issues
+    star = starry.Primary(starry.Map(ydeg=ydeg), #added in lazy=False - removed due to .eval() issues
                           m   =cfg.star.m,
                           r   =cfg.star.r,
                           prot= cfg.star.prot,
                           theta0=180) #?
+
+    star.map.inc = cfg.star.inc
 
 
     # planet = starry.kepler.Secondary(starry.Map(ydeg=ydeg), #added in lazy=False
@@ -41,9 +43,9 @@ def initsystem(fit, ydeg):
     #                                  inc  =cfg.planet.inc,
     #                                  theta0=180)
 
-    system = starry.System(star)
+    # system = starry.System(star)
 
-    return star, system #, planet, system
+    return star #, planet, system
 
 def specint(wn, spec, filtwn_list, filttrans_list):
     """

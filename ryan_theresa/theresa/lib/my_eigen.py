@@ -56,18 +56,22 @@ def mkcurves(system, t, lmax, y00, ncurves=None, method='pca'):
             # print(f"The starting map value is {planet.map}")    
             # print(f"The l value is {l} and the m value is {m}")
             # print(f"The value a.eval() is {system.flux(t, total=False)[1].eval()}")     
-            planet.map[l, m] =  1.0 #update why?
+            planet.map[l, m] =  1.0 #this sets the spherical harmonic coordinate coeffcient to 1
             sflux, lcs[ind] = [a.eval() for a in system.flux(t, total=False)]
             # print(f"The pmap = 1 lcs row is {[a.eval() for a in system.flux(t, total=False)][1]}")
-            planet.map[l, m] = -1.0 #update why? is every second row negative version???
+            # print(f"The lcs at index {ind} is {lcs[ind]}")
+            planet.map[l, m] = -1.0 #this sets the spherical harmonic coordinate coeffcient to -1
             sflux, lcs[ind+1] = [a.eval() for a in system.flux(t, total=False)]
+            # print(f"The lcs at index {ind+1} is {lcs[ind]}")
             # print(f"The pmap = -1 lcs row is {[a.eval() for a in system.flux(t, total=False)][1]}\n")
             planet.map[l, m] = 0.0 #how the map started
             ind += 2
             # ind += 1
 
+    
     print(lcs.shape)
     print(sflux)
+
 
     # np.savetxt("lcs_uniform_test.txt", lcs, delimiter=",")
 
