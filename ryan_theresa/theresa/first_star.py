@@ -117,7 +117,10 @@ def finding_A(cfile):
     # fit.sflux= [a.eval() for a in  \
     #                             system.flux(fit.t, total=True)]
 
-    fit.sflux = np.ones(fit.t.shape)
+    # Uniform star object
+    star = utils.initsystem(fit, 1)
+
+    fit.sflux = star.map.flux(theta=fit.t.shape).eval()
     
     print(f"The sflux is: {fit.sflux}")
 
@@ -287,12 +290,12 @@ def finding_A(cfile):
     # print(f"The designe matrix of eigeny is {eigeny_A}.\nIt has rank {eigen_R_2}")
     # plots.lightcurves(fit.t, m.lcs, outdir)
 
-    plots.eigencurves(fit.t, m.ecurves, outdir, "ecurves_curves",
-                              ncurves=m.ncurves)
+    # plots.eigencurves(fit.t, m.ecurves, outdir, "ecurves_curves", ncurves=m.ncurves)
     
 
-    plots.eigencurves(fit.t, m.lcs, outdir, "lcs_curves",
-                              ncurves=m.ncurves)
+    # plots.eigencurves(fit.t, m.lcs, outdir, "lcs_curves", ncurves=m.ncurves)
+
+    plots.lightcurves(fit.t, m.lcs, outdir, "lcs_light_curves")
 
     
 
