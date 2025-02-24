@@ -25,6 +25,7 @@ def emaps(planet, eigeny, outdir, proj='ortho'):
         fname = 'emaps-moll.png'
 
     lmax = np.int(ny**0.5 - 1)
+    thet = np.linspace(0, 360, ny)
 
     ncols = np.int(np.sqrt(ncurves) // 1)
     nrows = np.int(ncurves // ncols + (ncurves % ncols != 0))
@@ -45,6 +46,8 @@ def emaps(planet, eigeny, outdir, proj='ortho'):
             for m in range(-l, l + 1):
                 planet.map[l, m] = eigeny[j, yi]
                 yi += 1
+
+        print(f"The {j} index eigen map's flux is {planet.map.flux(theta=thet).eval()}")
         
         ax.imshow(planet.map.render(theta=0, projection=proj).eval(),
                   origin="lower",
